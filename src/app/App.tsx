@@ -1,0 +1,500 @@
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
+
+import logo from "../assets/wingslogo.png";
+import familyIcon from "../assets/familyicon.png";
+import allAgesIcon from "../assets/agesicon.png";
+import heroImage1 from "../assets/hero/hero-1.jpg";
+import heroImage2 from "../assets/hero/hero-2.jpg";
+import heroImage3 from "../assets/hero/hero-3.jpg";
+import heroImage4 from "../assets/hero/hero-4.jpg";
+import galleryImage1 from "../assets/gallery/gallery-1.jpg";
+import galleryImage2 from "../assets/gallery/gallery-2.jpg";
+import galleryImage3 from "../assets/gallery/gallery-3.jpg";
+import galleryImage4 from "../assets/gallery/gallery-4.jpg";
+import catchCornerLogo from "../assets/logos/catchcorner.png";
+import { HeroCarousel } from "@/app/components/HeroCarousel";
+import { InfoBox } from "@/app/components/InfoBox";
+import { PriceCard } from "@/app/components/PriceCard";
+import { ScheduleTable } from "@/app/components/ScheduleTable";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/app/components/ui/accordion";
+import { Snowflake, Cross } from "lucide-react";
+
+export default function App() {
+  const heroImages = [
+    { url: heroImage3, alt: "Wings Arena seating area" },
+    { url: heroImage1, alt: "Wings Arena ice rink facility" },
+    { url: heroImage2, alt: "Wings Arena ice rink view" },
+    { url: heroImage4, alt: "Ice skates rental" },
+  ];
+
+  // Track breakpoints in JS so we can (a) scroll correctly and (b) remount schedule when layout changes.
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(min-width: 1024px)").matches
+      : false
+  );
+
+  const [isUnder1000, setIsUnder1000] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 1000px)").matches
+      : false
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mqDesktop = window.matchMedia("(min-width: 1024px)");
+    const mq1000 = window.matchMedia("(max-width: 1000px)");
+
+    const onDesktopChange = () => setIsDesktop(mqDesktop.matches);
+    const on1000Change = () => setIsUnder1000(mq1000.matches);
+
+    // Safari fallback support
+    if (mqDesktop.addEventListener)
+      mqDesktop.addEventListener("change", onDesktopChange);
+    else mqDesktop.addListener(onDesktopChange);
+
+    if (mq1000.addEventListener)
+      mq1000.addEventListener("change", on1000Change);
+    else mq1000.addListener(on1000Change);
+
+    // Initialize
+    onDesktopChange();
+    on1000Change();
+
+    return () => {
+      if (mqDesktop.removeEventListener)
+        mqDesktop.removeEventListener("change", onDesktopChange);
+      else mqDesktop.removeListener(onDesktopChange);
+
+      if (mq1000.removeEventListener)
+        mq1000.removeEventListener("change", on1000Change);
+      else mq1000.removeListener(on1000Change);
+    };
+  }, []);
+
+  // Remount ScheduleTable when the <=1000 layout mode changes
+  const scheduleKey = useMemo(
+    () => (isUnder1000 ? "schedule-under-1000" : "schedule-over-1000"),
+    [isUnder1000]
+  );
+
+  const smoothScrollToEl = (el: HTMLElement, id?: string) => {
+    if (id) {
+      try {
+        window.history.replaceState(null, "", `#${id}`);
+      } catch {
+        // ignore
+      }
+    }
+
+    const offset = 12;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  };
+
+  const scrollToId =
+    (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (!el) return;
+      smoothScrollToEl(el, id);
+    };
+
+  const scrollToPricing = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const targetId = isDesktop ? "pricing-desktop" : "pricing-mobile";
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    smoothScrollToEl(el, targetId);
+  };
+
+  // ✅ One shadow token you can reuse everywhere (cards/images/buttons/schedule wrappers)
+  const SHADOW = "shadow-[0_8px_20px_rgba(0,0,0,0.45)]";
+
+  return (
+    <div className="min-h-screen bg-[#0f1340] flex flex-col sm:block">
+      {/* Header */}
+      <header className="bg-[#0f1340] border-b border-[#b2dbd7]/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 py-4">
+          <nav className="flex items-center justify-between"></nav>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-[#0f1340] border-b border-[#b2dbd7]/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-5 xl:px-0 py-12">
+          <div className="grid lg:grid-cols-2 gap-y-8 lg:gap-y-8 lg:gap-x-[162px] items-center">
+            <div className="lg:-ml-[60px] min-[1001px]:max-[1325px]:ml-0 min-[1001px]:max-[1325px]:pr-5">
+              {/* Center logo + header for all breakpoints <= ~1000px */}
+              <div className="flex flex-col items-center lg:items-center mb-6">
+                {/* ✅ image shadow */}
+                <img
+                  src={logo}
+                  alt="Wings Arena"
+                  className={`w-[100.04px] mt-[-50px] -mb-[15px] ml-3 mr-3 lg:ml-[10px] min-[1001px]:max-[1325px]:ml-[28px]`}
+                />
+                <h1 className="text-4xl lg:text-5xl text-white text-center lg:text-left min-[1001px]:max-[1325px]:pl-[28px]">
+                  Stick & Puck
+                </h1>
+                <div className="mt-[15px] -mb-[10px] h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
+              </div>
+
+              {/* ✅ Nudge the paragraph + buttons to the right ONLY for 1001–1325 */}
+              <div className="text-gray-300 mb-4 ml-1 space-y-5 lg:text-center min-[1001px]:max-[1325px]:ml-[28px] text-[15px] sm:text-[16px] lg:text-[18px] leading-relaxed">
+                <p>
+                  Lace up and hit the ice at our Public Skate—the perfect chance
+                  to get out on the ice. Whether you're practicing your skills,
+                  staying active, or just skating for fun, we welcome all ages
+                  and skill levels!
+                </p>
+                <p>
+                  No skates? No problem—we've got a wide range of rental sizes
+                  from youth to adult, with both hockey and figure skates
+                  available.
+                </p>
+              </div>
+
+              {/* Center buttons for all breakpoints <= ~1000px */}
+              {/*
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-center min-[1001px]:max-[1325px]:ml-[28px]">
+                <a
+                  href="#schedule"
+                  onClick={scrollToId("schedule")}
+                  className={`bg-[#b2dbd7] text-gray-900 px-6 py-3 rounded-md hover:bg-[#9ccbc7] hover:scale-105 transition-all inline-block ${SHADOW}`}
+                >
+                  View Schedule
+                </a>
+                <a
+                  href="#pricing"
+                  onClick={scrollToPricing}
+                  className={`bg-transparent text-white px-6 py-3 rounded-md border border-red-700 hover:bg-gray-800 hover:scale-105 transition-all inline-block ${SHADOW}`}
+                >
+                  Birthdays
+                </a>
+              </div>
+              */}
+            </div>
+
+            {/* ✅ HeroCarousel wrapper shadow (image area) */}
+            <div
+              className={`
+                relative h-64 sm:h-80 lg:h-96
+                ml-[0px] lg:ml-0
+                min-[1001px]:max-[1325px]:h-[320px]
+                min-[1001px]:max-[1325px]:ml-0
+                min-[1001px]:max-[1325px]:scale-[0.93]
+                min-[1001px]:max-[1325px]:origin-top-left
+                ${SHADOW}
+                rounded-lg overflow-hidden
+              `}
+            >
+              <HeroCarousel images={heroImages} interval={3000} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Reorder Schedule before Info Boxes ONLY at widths <= 1000px */}
+      <div className="max-[1000px]:flex max-[1000px]:flex-col">
+        {/* Info Boxes */}
+        <section className="max-w-[calc(80rem*0.97+200px)] mx-auto px-0 sm:px-6 xl:px-8 py-8 max-[1000px]:order-2 max-[1000px]:pt-0 max-[1000px]:-mt-[18px] lg:mt-[25px]">
+          {/* Full-bleed ONLY on mobile to maximize width for the 2-column grid */}
+          <div className="max-[640px]:w-[100vw] max-[640px]:ml-[calc(50%-50vw)] max-[640px]:px-3 max-[640px]:box-border">
+            {/* ✅ wrapper applies shadow to each InfoBox card without needing to edit InfoBox component */}
+            <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-x-[20px] gap-y-[calc(1rem*1.0356)] justify-items-stretch">
+              <div className={`w-full [&>*]:!w-full [&>*]:${SHADOW}`}>
+                <InfoBox
+                  iconImage={familyIcon}
+                  title="Great for Families"
+                  description="A fun outing for kids, teens, and parents"
+                  iconSize="w-[28.6px] h-[28.6px]"
+                  iconOffset="-mt-[5px]"
+                  titleClassName="text-[16px] sm:text-[16px]"
+                  descriptionClassName="text-[11px] sm:text-[13px] leading-tight"
+                />
+              </div>
+
+              <div className={`w-full [&>*]:!w-full [&>*]:${SHADOW}`}>
+                <InfoBox
+                  iconImage={allAgesIcon}
+                  title="All Ages Welcome"
+                  description="Family-friendly environment for all"
+                  iconSize="w-[35.35px] h-[35.35px]"
+                  iconOffset="-mt-[10px]"
+                  textOffset="-mt-[1.5px]"
+                  titleClassName="text-[15px] sm:text-[16px]"
+                  descriptionClassName="text-[11px] sm:text-[13px] leading-snug"
+                />
+              </div>
+
+              <div className={`w-full [&>*]:!w-full [&>*]:${SHADOW}`}>
+                <InfoBox
+                  icon={Snowflake}
+                  title="Quality Ice"
+                  description="Professionally maintained ice surface"
+                  titleClassName="text-[16px] sm:text-[16px]"
+                  descriptionClassName="text-[11px] sm:text-[13px] leading-tight"
+                  iconOffset="-mt-[0px]"
+                  textOffset="-mt-[3.5px]"
+                />
+              </div>
+
+              <div className={`w-full [&>*]:!w-full [&>*]:${SHADOW}`}>
+                <InfoBox
+                  icon={Cross}
+                  title="Safety First"
+                  description="Trained staff and safety equipment available"
+                  titleClassName="text-[16px] sm:text-[16px]"
+                  descriptionClassName="text-[11px] sm:text-[13px] leading-tight"
+                  iconOffset="-mt-[6px]"
+                  textOffset="-mt-[3.5px]"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Schedule Section */}
+        <section
+          id="schedule"
+          className="bg-[#0f1340] py-12 max-[1000px]:order-1"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
+            <div className="flex flex-col gap-6 sm:gap-8 min-[1001px]:items-center">
+              <div
+                className={[
+                  "order-1 w-full",
+                  // <=1000: keep your existing offsets/flow
+                  "max-[1000px]:-mt-[47px] max-[1000px]:mx-0",
+                  // >=1001: center + grow width, and move everything up ~30px
+                  "min-[1001px]:mx-auto",
+                  "min-[1001px]:w-[clamp(760px,72vw,1240px)]",
+                  "min-[1001px]:-mt-[30px]",
+                ].join(" ")}
+              >
+                <h2 className="text-[1.50125rem] sm:text-4xl mb-7 mt-7 min-[1001px]:mb-11 text-white text-center">
+                  Upcoming Public Skates
+                </h2>
+                <div className="mb-[20px] -mt-[12px] h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
+
+                {/* ✅ schedule wrapper shadow */}
+                <div
+                  className={`bg-gray-800 rounded-lg border border-gray-700 p-4 sm:p-6 w-full min-w-0 overflow-visible ${SHADOW}`}
+                >
+                  <ScheduleTable key={scheduleKey} />
+                </div>
+              </div>
+
+              {/* Pricing Section - shows here on mobile, later on desktop */}
+              <div className="order-2 lg:hidden mt-0">
+                <h2
+                  id="pricing-mobile"
+                  className="text-[1.7rem] sm:text-[2.15625rem] mb-2 sm:mb-8 text-white text-center mt-[0px] sm:mt-0"
+                ></h2>
+
+                <div
+                  className="flex justify-center w-full"
+                  style={{
+                    ["--pc-w" as any]: "clamp(140px, 56vw, 163px)",
+                    ["--pc-gap" as any]: "clamp(6px, 3vw, 28px)",
+                    ["--pc-title" as any]: "clamp(14px, 2.2vw, 20px)",
+                    ["--pc-price" as any]: "clamp(24px, 4.6vw, 42px)",
+                    ["--pc-desc" as any]: "clamp(12px, 1.8vw, 14px)",
+                    ["--pc-feat" as any]: "clamp(12px, 1.7vw, 14px)",
+                  }}
+                >
+                  {/* ✅ wrapper applies shadow to PriceCard components */}
+                  <div className="grid grid-flow-col items-stretch justify-center gap-x-[var(--pc-gap)] auto-cols-[clamp(132px,56vw,200px)] max-[450px]:auto-cols-[clamp(108px,46vw,150px)] min-[601px]:max-[1000px]:auto-cols-[clamp(220px,35vw,340px)]">
+                    <div
+                      className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}
+                    >
+                      <PriceCard
+                        title="Admission"
+                        price="$14"
+                        description="Per person"
+                      />
+                    </div>
+
+                    <div
+                      className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}
+                    >
+                      <PriceCard
+                        title="Skate Rental"
+                        price="$6"
+                        description="Per person"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* (cards section commented out in your original) */}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Pricing Section - shows here on desktop, hidden on mobile */}
+      <section
+        id="pricing-desktop"
+        className="hidden lg:block max-w-7xl mx-auto px-4 sm:px-6 xl:px-8 py-20 lg:-mt-[75px]"
+      >
+        <h2 className="text-[2rem] sm:text-[2.15625rem] mb-1 text-white text-center"></h2>
+
+        {/* ✅ wrapper applies shadow to PriceCard components */}
+        <div
+          className={
+            "grid grid-cols-1 sm:grid-cols-2 max-w-[856px] mx-auto gap-8 sm:gap-12 lg:gap-[72px]"
+          }
+        >
+          <div className={`[&>*]:${SHADOW}`}>
+            <PriceCard
+              title="Admission"
+              price="$14"
+              description="Per person"
+              features={["Walk-ins welcome", "Session length varies by date"]}
+            />
+          </div>
+
+          <div className={`[&>*]:${SHADOW}`}>
+            <PriceCard
+              title="Skate Rental"
+              price="$6"
+              description="Per person"
+              features={[
+                "Hockey & Figure Skates",
+                "Youth & Adult Sizes",
+                "Exchange sizes anytime",
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Parties & Ice Bookings Section */}
+      <section className="bg-[#0f1340] py-8 pb-4 sm:pb-12 -mt-[25px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
+          <h2 className="text-[1.5625rem] sm:text-[2.2625rem] mb-0 sm:mb-5 text-white text-center">
+            Parties & Ice Bookings
+          </h2>
+          <div className="my-5 h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
+
+          {/* ✅ UPDATED: wider container ONLY on desktop (lg+) so the two cards get wider */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 w-[90%] sm:w-full max-w-4xl lg:max-w-6xl xl:max-w-[72rem] mx-auto my-8 gap-8 sm:gap-12 lg:gap-[72px]">
+            {/* ✅ card shadow */}
+            <div
+              className={`bg-gray-800 rounded-lg border border-gray-700 p-[1.65375rem] text-center ${SHADOW}`}
+            >
+              <h3 className="text-white text-[1.378125rem] sm:text-[1.65375rem] mb-4 -mt-[5px]">
+                Birthday Parties
+              </h3>
+
+              {/* ✅ button shadow */}
+              <a
+                href="https://www.wingsarena.com/events"
+                className={`bg-[#2c3f5d] text-gray-200 px-[3.85375rem] py-[1.126875rem] rounded-md hover:bg-[#9ccbc7] hover:scale-105 transition-all inline-block mb-4 font-bold ${SHADOW}`}
+              >
+                Learn More
+              </a>
+
+              <p className="text-gray-300 text-[0.9646875rem] mt-1 font-bold leading-7">
+                For birthday party inquiries email: jwanderlingh@wingsarena.com
+              </p>
+            </div>
+
+            {/* ✅ card shadow */}
+            <div
+              className={`bg-gray-800 rounded-lg border border-gray-700 p-[1.65375rem] text-center ${SHADOW}`}
+            >
+              <h3 className="text-white text-[1.378125rem] sm:text-[1.65375rem] mb-4 -mt-[5px]">
+                Private Ice Bookings
+              </h3>
+
+              {/* ✅ button shadow */}
+              <a
+                href="https://www.catchcorner.com/facility-page/embedded/rental/wings-arena"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`bg-[#b2dbd7] text-gray-900 px-[2.35375rem] py-[0.526875rem] rounded-md hover:bg-[#9ccbc7] hover:scale-105 transition-all inline-block mt-[2px] ${SHADOW}`}
+              >
+                {/* ✅ image shadow */}
+                <img
+                  src={catchCornerLogo}
+                  alt="Book with CatchCorner"
+                  className={`h-[2.075rem] sm:h-[2.81rem] rounded-md`}
+                />
+              </a>
+              <p className="text-gray-100 text-[0.9646875rem] mt-4 font-bold">
+                Ice time, on your watch. Book your next skate now!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      {/* ✅ Guaranteed move up 50px: use translate instead of relying on margins */}
+      <section className="bg-[#0f1340] py-12 sm:py-12 pt-0 sm:pt-12 order-1 sm:order-none mt-[35px] sm:mt-0 -translate-y-[15px]">
+        <div className="max-w-[58.08rem] mx-auto px-4 sm:px-6 xl:px-8">
+          <h2 className="text-2xl sm:text-3xl mb-4 sm:mb-6 text-white text-center">
+            Frequently Asked Questions
+          </h2>
+          <div className="my-4 h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
+
+          {/* ✅ accordion (card) shadow */}
+          <Accordion
+            type="single"
+            collapsible
+            className={`bg-[#b2dbd7] rounded-lg border border-gray-700 px-4 sm:px-6 ${SHADOW}`}
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Do I need to bring my own skates?</AccordionTrigger>
+              <AccordionContent>
+                No, skate rentals are available for a small fee. We have sizes
+                for all ages, from toddlers to adults. However, you're welcome
+                to bring your own skates if you prefer.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>What should I wear to public skate?</AccordionTrigger>
+              <AccordionContent>
+                We recommend wearing comfortable, warm clothing that allows for
+                movement. Long pants are recommended, and layers are ideal as
+                the rink temperature is kept cool. Gloves or mittens are
+                strongly encouraged for hand protection.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Are skating aids available for beginners?</AccordionTrigger>
+              <AccordionContent>
+                Yes, we have skating aids available to help beginners learn to
+                skate (limited quantity). These are especially helpful for young
+                children and first-time skaters. Staff members are also
+                available to provide basic guidance.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>Can I book a birthday party or group event?</AccordionTrigger>
+              <AccordionContent>
+                Absolutely! We host birthday parties and group event bookings.
+                These include reserved skating time, party room rental, and
+                various add-on options. For more info and availability, email
+                our Events Coordinator - jwanderlingh@wingsarena.com
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+    </div>
+  );
+}
