@@ -17,13 +17,17 @@ const CALENDAR_ID = (ENV_CALENDAR_ID || FALLBACK_CALENDAR_ID).trim();
 const TZ = "America/New_York";
 
 /**
- * ✅ Only show Public Skate events.
+ * ✅ Only show Stick & Puck events.
  * Add/remove keywords as needed to match your naming in Google Calendar.
  */
-const PUBLIC_SKATE_KEYWORDS = [
-  "public skate",
-  "public skating",
-  "public skates",
+const STICK_PUCK_KEYWORDS = [
+  "stick & puck",
+  "stick and puck",
+  "stick n puck",
+  "stick'n puck",
+  "sticknpuck",
+  "stick/puck",
+  "stick puck",
 ];
 
 export interface CalendarEvent {
@@ -82,17 +86,15 @@ function getDayOfWeek(dateString: string): string {
   });
 }
 
-function matchesPublicSkate(summary?: string): boolean {
+function matchesStickAndPuck(summary?: string): boolean {
   const s = (summary ?? "").toLowerCase().trim();
   if (!s) return false;
-  return PUBLIC_SKATE_KEYWORDS.some((k) => s.includes(k));
+  return STICK_PUCK_KEYWORDS.some((k) => s.includes(k));
 }
 
 export async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
   if (!API_KEY) {
-    console.error(
-      "[Calendar] Missing env var: VITE_GOOGLE_CALENDAR_API_KEY."
-    );
+    console.error("[Calendar] Missing env var: VITE_GOOGLE_CALENDAR_API_KEY.");
     return [];
   }
 
@@ -153,8 +155,8 @@ export async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
 
     const events: CalendarEvent[] = items
       .filter((item) => item.status !== "cancelled")
-      // ✅ FILTER OUT NON–PUBLIC SKATE EVENTS
-      .filter((item) => matchesPublicSkate(item.summary))
+      // ✅ FILTER OUT NON–STICK & PUCK EVENTS
+      .filter((item) => matchesStickAndPuck(item.summary))
       .map((item) => {
         const allDay = isAllDay(item);
 

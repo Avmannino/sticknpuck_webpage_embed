@@ -1,3 +1,4 @@
+// src/app/components/PriceCard.tsx
 type PriceCardProps = {
   title: string;
   price: string;
@@ -20,9 +21,7 @@ export function PriceCard({
     <div
       className={`bg-gray-800 rounded-lg border border-gray-700 p-6 h-full ${className}`}
     >
-      {/* Default: desktop (>=1001px) left-aligned */}
       <div className="flex flex-col items-start text-left h-full">
-        {/* ✅ Nudge ONLY the Admission "top block" up slightly so it matches Skate Rental */}
         <div
           className={[
             "w-full",
@@ -31,7 +30,6 @@ export function PriceCard({
             isAdmission ? "-mt-[1px]" : "",
           ].join(" ")}
         >
-          {/* ✅ Lower ONLY "Skate Rental" title font size */}
           <h3
             className={[
               "text-white font-semibold",

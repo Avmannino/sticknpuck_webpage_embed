@@ -1,3 +1,4 @@
+// src/app/components/InfoBox.tsx
 import { LucideIcon } from "lucide-react";
 
 interface InfoBoxProps {
@@ -9,7 +10,7 @@ interface InfoBoxProps {
   iconOffset?: string;
   textOffset?: string;
 
-  // ✅ per-card overrides
+  // per-card overrides
   titleClassName?: string;
   descriptionClassName?: string;
 }
