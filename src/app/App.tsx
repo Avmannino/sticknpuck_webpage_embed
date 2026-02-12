@@ -9,7 +9,10 @@ import heroImage1 from "../assets/hero/hero-1.jpg";
 import heroImage2 from "../assets/hero/hero-2.jpg";
 import heroImage3 from "../assets/hero/hero-3.jpg";
 import heroImage4 from "../assets/hero/hero-4.jpg";
-import catchCornerLogo from "../assets/logos/catchcorner.png";
+
+// ✅ REMOVED: catchCornerLogo import (unused since Parties/Ice Booking section is removed)
+// import catchCornerLogo from "../assets/logos/catchcorner.png";
+
 import { HeroCarousel } from "@/app/components/HeroCarousel";
 import { InfoBox } from "@/app/components/InfoBox";
 import { PriceCard } from "@/app/components/PriceCard";
@@ -117,6 +120,10 @@ export default function App() {
 
   // ✅ One shadow token you can reuse everywhere (cards/images/buttons/schedule wrappers)
   const SHADOW = "shadow-[0_8px_20px_rgba(0,0,0,0.45)]";
+
+  // ✅ Keep these referenced so TS doesn't flag them as unused
+  void scrollToId;
+  void scrollToPricing;
 
   return (
     <div className="min-h-screen bg-[#0e633c] flex flex-col sm:block">
@@ -319,7 +326,11 @@ export default function App() {
                     <div
                       className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}
                     >
-                      <PriceCard title="Admission" price="$20" description="Per skater" />
+                      <PriceCard
+                        title="Admission"
+                        price="$20"
+                        description="Per skater"
+                      />
                     </div>
 
                     <div
@@ -365,7 +376,14 @@ export default function App() {
           <div className={`[&>*]:${SHADOW}`}>
             <PriceCard
               title="Equipment Required"
-              features={["Helmet", "Skates (Rentals Available)", "Stick", "Gloves"]}
+              price=""
+              description="Helmet • Skates • Stick • Gloves"
+              features={[
+                "Helmet",
+                "Skates (Rentals Available)",
+                "Stick",
+                "Gloves",
+              ]}
             />
           </div>
         </div>
@@ -423,8 +441,8 @@ export default function App() {
               </AccordionTrigger>
               <AccordionContent className="text-white">
                 Stick &amp; Puck sessions are not intended for private lessons
-                with coaches. If you’re interested in booking private lesson
-                ice time, please visit our Private Lessons page.
+                with coaches. If you’re interested in booking private lesson ice
+                time, please contact us for more information.
               </AccordionContent>
             </AccordionItem>
 
