@@ -371,62 +371,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Parties & Ice Bookings Section (unchanged) */}
-      <section className="bg-[#0e633c] py-8 pb-4 sm:pb-12 -mt-[25px]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
-          <h2 className="text-[1.5625rem] sm:text-[2.2625rem] mb-0 sm:mb-5 text-white text-center">
-            Parties & Ice Bookings
-          </h2>
-          <div className="my-5 h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 w-[90%] sm:w-full max-w-4xl lg:max-w-6xl xl:max-w-[72rem] mx-auto my-8 gap-8 sm:gap-12 lg:gap-[72px]">
-            <div
-              className={`bg-gray-800 rounded-lg border border-gray-700 p-[1.65375rem] text-center ${SHADOW}`}
-            >
-              <h3 className="text-white text-[1.378125rem] sm:text-[1.65375rem] mb-4 -mt-[5px]">
-                Birthday Parties
-              </h3>
-
-              <a
-                href="https://www.wingsarena.com/events"
-                className={`bg-[#2c3f5d] text-gray-200 px-[3.85375rem] py-[1.126875rem] rounded-md hover:bg-[#9ccbc7] hover:scale-105 transition-all inline-block mb-4 font-bold ${SHADOW}`}
-              >
-                Learn More
-              </a>
-
-              <p className="text-gray-300 text-[0.9646875rem] mt-1 font-bold leading-7">
-                For birthday party inquiries email: jwanderlingh@wingsarena.com
-              </p>
-            </div>
-
-            <div
-              className={`bg-gray-800 rounded-lg border border-gray-700 p-[1.65375rem] text-center ${SHADOW}`}
-            >
-              <h3 className="text-white text-[1.378125rem] sm:text-[1.65375rem] mb-4 -mt-[5px]">
-                Private Ice Bookings
-              </h3>
-
-              <a
-                href="https://www.catchcorner.com/facility-page/embedded/rental/wings-arena"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`bg-[#b2dbd7] text-gray-900 px-[2.35375rem] py-[0.526875rem] rounded-md hover:bg-[#9ccbc7] hover:scale-105 transition-all inline-block mt-[2px] ${SHADOW}`}
-              >
-                <img
-                  src={catchCornerLogo}
-                  alt="Book with CatchCorner"
-                  className={`h-[2.075rem] sm:h-[2.81rem] rounded-md`}
-                />
-              </a>
-              <p className="text-gray-100 text-[0.9646875rem] mt-4 font-bold">
-                Ice time, on your watch. Book your next skate now!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section (unchanged for now) */}
+      {/* FAQ Section */}
       <section className="bg-[#0e633c] py-12 sm:py-12 pt-0 sm:pt-12 order-1 sm:order-none mt-[35px] sm:mt-0 -translate-y-[15px]">
         <div className="max-w-[58.08rem] mx-auto px-4 sm:px-6 xl:px-8">
           <h2 className="text-2xl sm:text-3xl mb-4 sm:mb-6 text-white text-center">
@@ -437,45 +382,60 @@ export default function App() {
           <Accordion
             type="single"
             collapsible
-            className={`bg-[#b2dbd7] rounded-lg border border-gray-700 px-4 sm:px-6 ${SHADOW}`}
+            className={`bg-[#1e2a3a] rounded-lg border border-gray-700 px-4 sm:px-6 text-white ${SHADOW}`}
           >
             <AccordionItem value="item-1">
-              <AccordionTrigger>Do I need to bring my own skates?</AccordionTrigger>
-              <AccordionContent>
-                No, skate rentals are available for a small fee. We have sizes
-                for all ages, from toddlers to adults. However, you're welcome
-                to bring your own skates if you prefer.
+              <AccordionTrigger className="text-white">
+                What is Stick &amp; Puck?
+              </AccordionTrigger>
+              <AccordionContent className="text-white">
+                Stick &amp; Puck is unstructured open ice for individual skill
+                development—shooting, passing, stickhandling, and skating at
+                your own pace. It is not an organized game or scrimmage.
               </AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="item-2">
-              <AccordionTrigger>What should I wear to public skate?</AccordionTrigger>
-              <AccordionContent>
-                We recommend wearing comfortable, warm clothing that allows for
-                movement. Long pants are recommended, and layers are ideal as
-                the rink temperature is kept cool. Gloves or mittens are
-                strongly encouraged for hand protection.
+              <AccordionTrigger className="text-white">
+                What equipment do I need?
+              </AccordionTrigger>
+              <AccordionContent className="text-white">
+                A helmet, skates, stick, and gloves are required for all
+                participants. Rental skates and helmets are available. We
+                recommend shin pads and elbow pads for added protection.
               </AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="item-3">
-              <AccordionTrigger>
-                Are skating aids available for beginners?
+              <AccordionTrigger className="text-white">
+                Is Stick &amp; Puck goalie friendly?
               </AccordionTrigger>
-              <AccordionContent>
-                Yes, we have skating aids available to help beginners learn to
-                skate (limited quantity). These are especially helpful for young
-                children and first-time skaters. Staff members are also
-                available to provide basic guidance.
+              <AccordionContent className="text-white">
+                Yes—goalies are welcome. Stick &amp; Puck is a great environment
+                to work on movement, angles, rebound control, and puck handling
+                in a relaxed, unstructured setting.
               </AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="item-4">
-              <AccordionTrigger>
-                Can I book a birthday party or group event?
+              <AccordionTrigger className="text-white">
+                Can I take private lessons during Stick &amp; Puck?
               </AccordionTrigger>
-              <AccordionContent>
-                Absolutely! We host birthday parties and group event bookings.
-                These include reserved skating time, party room rental, and
-                various add-on options. For more info and availability, email
-                our Events Coordinator - jwanderlingh@wingsarena.com
+              <AccordionContent className="text-white">
+                Stick &amp; Puck sessions are not intended for private lessons
+                with coaches. If you’re interested in booking private lesson
+                ice time, please visit our Private Lessons page.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-5">
+              <AccordionTrigger className="text-white">
+                Are sessions separated by age or skill level?
+              </AccordionTrigger>
+              <AccordionContent className="text-white">
+                Some Stick &amp; Puck sessions are age-specific to help keep
+                things safe and comfortable for all skaters. Please check the
+                schedule on our home page for details.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
