@@ -10,9 +10,6 @@ import heroImage2 from "../assets/hero/hero-2.jpg";
 import heroImage3 from "../assets/hero/hero-3.jpg";
 import heroImage4 from "../assets/hero/hero-4.jpg";
 
-// ✅ REMOVED: catchCornerLogo import (unused since Parties/Ice Booking section is removed)
-// import catchCornerLogo from "../assets/logos/catchcorner.png";
-
 import { HeroCarousel } from "@/app/components/HeroCarousel";
 import { InfoBox } from "@/app/components/InfoBox";
 import { PriceCard } from "@/app/components/PriceCard";
@@ -140,7 +137,6 @@ export default function App() {
           <div className="grid lg:grid-cols-12 gap-y-8 lg:gap-y-8 lg:gap-x-16 xl:gap-x-30 items-center">
             {/* LEFT (text) */}
             <div className="lg:col-span-7 lg:-ml-[60px] min-[1001px]:max-[1325px]:ml-0 min-[1001px]:max-[1325px]:pr-5">
-              {/* ✅ Center logo + header + divider to match centered text below */}
               <div className="flex flex-col items-center mb-6">
                 <img
                   src={logo}
@@ -155,7 +151,6 @@ export default function App() {
                 <div className="mt-[15px] -mb-[10px] h-px w-full max-w-[52rem] bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
               </div>
 
-              {/* ✅ Center the hero copy block and give it a nice wide max width */}
               <div className="text-gray-300 mb-4 space-y-5 text-center text-[15px] sm:text-[16px] lg:text-[18px] leading-relaxed mx-auto max-w-[52rem]">
                 <p>
                   Stick &amp; Puck is open ice time for individual skill
@@ -175,43 +170,26 @@ export default function App() {
                   information.
                 </p>
               </div>
-
-              {/* Buttons kept commented out per your original */}
-              {/*
-              <div className="flex flex-wrap gap-3 justify-center">
-                <a
-                  href="#schedule"
-                  onClick={scrollToId("schedule")}
-                  className={`bg-[#b2dbd7] text-gray-900 px-6 py-3 rounded-md hover:bg-[#9ccbc7] hover:scale-105 transition-all inline-block ${SHADOW}`}
-                >
-                  View Schedule
-                </a>
-                <a
-                  href="#pricing"
-                  onClick={scrollToPricing}
-                  className={`bg-transparent text-white px-6 py-3 rounded-md border border-red-700 hover:bg-gray-800 hover:scale-105 transition-all inline-block ${SHADOW}`}
-                >
-                  Pricing
-                </a>
-              </div>
-              */}
             </div>
 
             {/* RIGHT (carousel) */}
             <div className="lg:col-span-5">
-              <div
-                className={`
-                  relative h-64 sm:h-80 lg:h-96
-                  ml-[0px] lg:ml-0
-                  min-[1001px]:max-[1325px]:h-[320px]
-                  min-[1001px]:max-[1325px]:ml-0
-                  min-[1001px]:max-[1325px]:scale-[0.93]
-                  min-[1001px]:max-[1325px]:origin-top-left
-                  ${SHADOW}
-                  rounded-lg overflow-hidden
-                `}
-              >
-                <HeroCarousel images={heroImages} interval={3000} />
+              {/* ✅ Add mobile padding so the carousel never kisses the edges */}
+              <div className="max-[640px]:px-3 max-[640px]:box-border">
+                <div
+                  className={`
+                    relative h-64 sm:h-80 lg:h-96
+                    ml-[0px] lg:ml-0
+                    min-[1001px]:max-[1325px]:h-[320px]
+                    min-[1001px]:max-[1325px]:ml-0
+                    min-[1001px]:max-[1325px]:scale-[0.93]
+                    min-[1001px]:max-[1325px]:origin-top-left
+                    ${SHADOW}
+                    rounded-lg overflow-hidden
+                  `}
+                >
+                  <HeroCarousel images={heroImages} interval={3000} />
+                </div>
               </div>
             </div>
           </div>
@@ -222,7 +200,8 @@ export default function App() {
       <div className="max-[1000px]:flex max-[1000px]:flex-col">
         {/* Info Boxes */}
         <section className="max-w-[calc(80rem*0.97+200px)] mx-auto px-0 sm:px-6 xl:px-8 py-8 max-[1000px]:order-2 max-[1000px]:pt-0 max-[1000px]:-mt-[18px] lg:mt-[25px]">
-          <div className="max-[640px]:w-[100vw] max-[640px]:ml-[calc(50%-50vw)] max-[640px]:px-3 max-[640px]:box-border">
+          {/* ✅ Mobile padding wrapper for the whole grid */}
+          <div className="max-[640px]:px-3 max-[640px]:box-border">
             <div className="grid w-full grid-cols-2 lg:grid-cols-4 gap-x-[20px] gap-y-[calc(1rem*1.0356)] justify-items-stretch">
               <div className={`w-full [&>*]:!w-full [&>*]:${SHADOW}`}>
                 <InfoBox
@@ -253,7 +232,7 @@ export default function App() {
                 <InfoBox
                   icon={Snowflake}
                   title="Goalie Friendly"
-                  description="work on movement, angles, rebounds, and puck handling in a relaxed, unstructured session"
+                  description="Work on movement, angles, rebounds, and puck handling in a relaxed, unstructured session"
                   titleClassName="text-[16px] sm:text-[16px]"
                   descriptionClassName="text-[11px] sm:text-[13px] leading-tight"
                   iconOffset="-mt-[0px]"
@@ -277,76 +256,76 @@ export default function App() {
         </section>
 
         {/* Schedule Section */}
-        <section
-          id="schedule"
-          className="bg-[#0e633c] py-12 max-[1000px]:order-1"
-        >
+        <section id="schedule" className="bg-[#0e633c] py-12 max-[1000px]:order-1">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-8">
-            <div className="flex flex-col gap-6 sm:gap-8 min-[1001px]:items-center">
-              <div
-                className={[
-                  "order-1 w-full",
-                  "max-[1000px]:-mt-[47px] max-[1000px]:mx-0",
-                  "min-[1001px]:mx-auto",
-                  "min-[1001px]:w-[clamp(760px,72vw,1240px)]",
-                  "min-[1001px]:-mt-[30px]",
-                ].join(" ")}
-              >
-                <h2 className="text-[1.50125rem] sm:text-4xl mb-7 mt-7 min-[1001px]:mb-11 text-white text-center">
-                  Upcoming Stick &amp; Puck Sessions
-                </h2>
-                <div className="mb-[20px] -mt-[12px] h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
-
+            {/* ✅ Add a mobile-only padding wrapper for the schedule card */}
+            <div className="max-[640px]:px-0">
+              <div className="flex flex-col gap-6 sm:gap-8 min-[1001px]:items-center">
                 <div
-                  className={`bg-gray-800 rounded-lg border border-gray-700 p-4 sm:p-6 w-full min-w-0 overflow-visible ${SHADOW}`}
+                  className={[
+                    "order-1 w-full",
+                    "max-[1000px]:-mt-[47px] max-[1000px]:mx-0",
+                    "min-[1001px]:mx-auto",
+                    "min-[1001px]:w-[clamp(760px,72vw,1240px)]",
+                    "min-[1001px]:-mt-[30px]",
+                  ].join(" ")}
                 >
-                  <ScheduleTable key={scheduleKey} />
-                </div>
-              </div>
+                  <h2 className="text-[1.50125rem] sm:text-4xl mb-7 mt-7 min-[1001px]:mb-11 text-white text-center">
+                    Upcoming Stick &amp; Puck Sessions
+                  </h2>
+                  <div className="mb-[20px] -mt-[12px] h-px w-full bg-gradient-to-r from-transparent via-[#b2dbd7]/50 to-transparent" />
 
-              {/* Pricing Section - mobile */}
-              <div className="order-2 lg:hidden mt-0">
-                <h2
-                  id="pricing-mobile"
-                  className="text-[1.7rem] sm:text-[2.15625rem] mb-2 sm:mb-8 text-white text-center mt-[0px] sm:mt-0"
-                ></h2>
-
-                <div
-                  className="flex justify-center w-full"
-                  style={{
-                    ["--pc-w" as any]: "clamp(140px, 56vw, 163px)",
-                    ["--pc-gap" as any]: "clamp(6px, 3vw, 28px)",
-                    ["--pc-title" as any]: "clamp(14px, 2.2vw, 20px)",
-                    ["--pc-price" as any]: "clamp(24px, 4.6vw, 42px)",
-                    ["--pc-desc" as any]: "clamp(12px, 1.8vw, 14px)",
-                    ["--pc-feat" as any]: "clamp(12px, 1.7vw, 14px)",
-                  }}
-                >
-                  <div className="grid grid-flow-col items-stretch justify-center gap-x-[var(--pc-gap)] auto-cols-[clamp(132px,56vw,200px)] max-[450px]:auto-cols-[clamp(108px,46vw,150px)] min-[601px]:max-[1000px]:auto-cols-[clamp(220px,35vw,340px)]">
+                  {/* ✅ Mobile padding so schedule container doesn't feel edge-to-edge */}
+                  <div className="max-[640px]:px-3 max-[640px]:box-border">
                     <div
-                      className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}
+                      className={`bg-gray-800 rounded-lg border border-gray-700 p-4 sm:p-6 w-full min-w-0 overflow-visible ${SHADOW}`}
                     >
-                      <PriceCard
-                        title="Admission"
-                        price="$20"
-                        description="Per skater"
-                      />
-                    </div>
-
-                    <div
-                      className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}
-                    >
-                      <PriceCard
-                        title="Equipment Required"
-                        price="Required"
-                        description="Helmet • Skates • Stick • Gloves"
-                      />
+                      <ScheduleTable key={scheduleKey} />
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* (cards section commented out in your original) */}
+                {/* Pricing Section - mobile */}
+                <div className="order-2 lg:hidden mt-0">
+                  <h2
+                    id="pricing-mobile"
+                    className="text-[1.7rem] sm:text-[2.15625rem] mb-2 sm:mb-8 text-white text-center mt-[0px] sm:mt-0"
+                  ></h2>
+
+                  {/* ✅ Mobile padding wrapper so pricing cards never hit the edges */}
+                  <div className="max-[640px]:px-3 max-[640px]:box-border">
+                    <div
+                      className="flex justify-center w-full"
+                      style={{
+                        ["--pc-w" as any]: "clamp(140px, 56vw, 163px)",
+                        ["--pc-gap" as any]: "clamp(8px, 3.2vw, 28px)",
+                        ["--pc-title" as any]: "clamp(14px, 2.2vw, 20px)",
+                        ["--pc-price" as any]: "clamp(24px, 4.6vw, 42px)",
+                        ["--pc-desc" as any]: "clamp(12px, 1.8vw, 14px)",
+                        ["--pc-feat" as any]: "clamp(12px, 1.7vw, 14px)",
+                      }}
+                    >
+                      <div className="grid grid-flow-col items-stretch justify-center gap-x-[var(--pc-gap)] auto-cols-[clamp(132px,56vw,200px)] max-[450px]:auto-cols-[clamp(108px,46vw,150px)] min-[601px]:max-[1000px]:auto-cols-[clamp(220px,35vw,340px)]">
+                        <div className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}>
+                          <PriceCard title="Admission" price="$20" description="Per skater" />
+                        </div>
+
+                        <div className={`h-full flex [&>*]:h-full [&>*]:w-full [&>*]:mx-0 [&>*]:${SHADOW}`}>
+                          {/* ✅ FIX: No more second "Required" line on mobile */}
+                          <PriceCard
+                            title="Equipment Required"
+                            showPrice={false}
+                            features={["Helmet", "Skates", "Stick", "Gloves"]}
+                            className="max-[640px]:p-5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* (cards section commented out in your original) */}
+              </div>
             </div>
           </div>
         </section>
@@ -376,14 +355,8 @@ export default function App() {
           <div className={`[&>*]:${SHADOW}`}>
             <PriceCard
               title="Equipment Required"
-              price=""
-              description="Helmet • Skates • Stick • Gloves"
-              features={[
-                "Helmet",
-                "Skates (Rentals Available)",
-                "Stick",
-                "Gloves",
-              ]}
+              showPrice={false}
+              features={["Helmet", "Skates (Rentals Available)", "Stick", "Gloves"]}
             />
           </div>
         </div>
