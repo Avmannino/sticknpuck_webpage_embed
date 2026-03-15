@@ -10,7 +10,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY as
 
 // Fallback to your Public Skate calendar if env is missing
 const FALLBACK_CALENDAR_ID =
-  "8cdb8282e8d925234951e11b5002f474b68c876106fe54d8f8ec04c273566bab@group.calendar.google.com";
+  "8a8b80aefa9fd035a3c91ea2daedd059e8485066d7ec498e6a6d0b9992336953@group.calendar.google.com";
 
 const CALENDAR_ID = (ENV_CALENDAR_ID || FALLBACK_CALENDAR_ID).trim();
 
